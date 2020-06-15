@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,8 +23,6 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
 
     private String url = "";
-
-    private TextView emptyStateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
                 // Start the AsyncTask to fetch data
                 DownloadTask task = new DownloadTask();
                 task.execute(url);
+
+                // Hide keyboard after hitting button
+                InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                mgr.hideSoftInputFromWindow(editText.getWindowToken(),0);
             }
         });
 
